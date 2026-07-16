@@ -49,7 +49,8 @@ public class NotificationService {
         }
         List<String> to = new ArrayList<>();
         if (salonEmail != null && !salonEmail.isBlank()) to.add(salonEmail);
-        if (b.getWorker().getEmail() != null && !b.getWorker().getEmail().isBlank()) to.add(b.getWorker().getEmail());
+        String workerEmail = b.getWorker().getEmail();
+        if (workerEmail != null && !workerEmail.isBlank() && !to.contains(workerEmail)) to.add(workerEmail);
         if (to.isEmpty()) return;
 
         String body = """

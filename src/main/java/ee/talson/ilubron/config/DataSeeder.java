@@ -32,12 +32,12 @@ public class DataSeeder {
             }
 
             workers.saveAll(List.of(
-                    new Worker("Doris", null, Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
-                    new Worker("Ene", null, Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
-                    new Worker("Terje", null, Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
-                    new Worker("Keili", null, Set.of(MASSAAZ), MON_FRI, OPEN, CLOSE),
+                    new Worker("Doris", "doristukk@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
+                    new Worker("Ene", "eneorumaa2@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
+                    new Worker("Terje", "terts75@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
+                    new Worker("Keili", "juursalu.keili@gmail.com", Set.of(MASSAAZ), MON_FRI, OPEN, CLOSE),
                     // SmartBron: Anette teeb ripsmeid K ja R; pediküür samadel päevadel kuni täpsustub
-                    new Worker("Anette", null, Set.of(RIPSMED, PEDIKYYR),
+                    new Worker("Anette", "anettekontson@gmail.com", Set.of(RIPSMED, PEDIKYYR),
                             Set.of(WEDNESDAY, FRIDAY), OPEN, CLOSE)
             ));
 
