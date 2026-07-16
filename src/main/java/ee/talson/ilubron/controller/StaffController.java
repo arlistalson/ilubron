@@ -1,7 +1,9 @@
 package ee.talson.ilubron.controller;
 
+import ee.talson.ilubron.dto.Dtos.BookingDTO;
 import ee.talson.ilubron.exception.ConflictException;
 import ee.talson.ilubron.exception.NotFoundException;
+import ee.talson.ilubron.model.Booking;
 import ee.talson.ilubron.model.DayOff;
 import ee.talson.ilubron.model.Worker;
 import ee.talson.ilubron.repository.BookingRepository;
@@ -91,5 +93,26 @@ public class StaffController {
                 .orElseThrow(() -> new NotFoundException("Sel kuupäeval pole suletud päeva."));
         dayOffRepository.delete(dayOff);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/bookings")
+    public List<BookingDTO> myBookings(@RequestParam Long workerId, @RequestParam String pin) {
+        Worker worker = authorize(workerId, pin);
+        return bookingRepository.findUpcomingByWorker(worker.getId(), LocalDate.now(SALON_ZONE))
+                .stream().map(BookingDTO::of).toList();
+    }
+
+    @PatchMapping("/bookings/{id}/cancel")
+    public BookingDTO cancelBooking(@PathVariable Long id,
+                                    @RequestParam Long workerId, @RequestParam String pin) {
+        Worker worker = authorize(workerId, pin);
+        Booking booking = bookingRepository.findById(id)
+                .filter(b -> b.getWorker().getId().equals(worker.getId()))
+                .orElseThrow(() -> new NotFoundException("Broneeringut ei leitud."));
+        if (booking.getStatus() == Booking.Status.CANCELLED) {
+            throw new ConflictException("See broneering on juba tühistatud.");
+        }
+        booking.setStatus(Booking.Status.CANCELLED);
+        return BookingDTO.of(bookingRepository.save(booking));
     }
 }

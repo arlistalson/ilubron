@@ -27,4 +27,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findActiveByWorkerAndDateLocked(@Param("workerId") Long workerId, @Param("date") LocalDate date);
 
     List<Booking> findByDateOrderByStartTime(LocalDate date);
+
+    @Query("""
+            select b from Booking b
+            where b.worker.id = :workerId and b.date >= :from and b.status <> 'CANCELLED'
+            order by b.date, b.startTime
+            """)
+    List<Booking> findUpcomingByWorker(@Param("workerId") Long workerId, @Param("from") LocalDate from);
 }
