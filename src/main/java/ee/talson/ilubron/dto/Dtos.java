@@ -17,15 +17,14 @@ public final class Dtos {
 
     public record ServiceDTO(Long id, String name, String category, String priceText, int durationMinutes) {
         public static ServiceDTO of(SalonService s) {
-            return new ServiceDTO(s.getId(), s.getName(), s.getCategory().getDisplayName(),
+            return new ServiceDTO(s.getId(), s.getName(), s.getCategory(),
                     s.getPriceText(), s.getDurationMinutes());
         }
     }
 
     public record WorkerDTO(Long id, String name, List<String> categories) {
         public static WorkerDTO of(Worker w) {
-            return new WorkerDTO(w.getId(), w.getName(),
-                    w.getCategories().stream().map(Enum::name).toList());
+            return new WorkerDTO(w.getId(), w.getName(), List.copyOf(w.getCategories()));
         }
     }
 

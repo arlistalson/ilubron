@@ -13,9 +13,9 @@ public class SalonService {
     @Column(nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    /** Salongi enda kategooria nimi, nt "Juuksur", "Kosmeetik" */
     @Column(nullable = false)
-    private ServiceCategory category;
+    private String category;
 
     /** e.g. "35 €" or "70–100 € olenevalt pikkusest" */
     @Column(nullable = false)
@@ -29,7 +29,7 @@ public class SalonService {
     public SalonService() {
     }
 
-    public SalonService(String name, ServiceCategory category, String priceText, int durationMinutes) {
+    public SalonService(String name, String category, String priceText, int durationMinutes) {
         this.name = name;
         this.category = category;
         this.priceText = priceText;
@@ -39,8 +39,8 @@ public class SalonService {
     public Long getId() { return id; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public ServiceCategory getCategory() { return category; }
-    public void setCategory(ServiceCategory category) { this.category = category; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
     public String getPriceText() { return priceText; }
     public void setPriceText(String priceText) { this.priceText = priceText; }
     public int getDurationMinutes() { return durationMinutes; }

@@ -20,8 +20,7 @@ public class Worker {
     private String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private Set<ServiceCategory> categories;
+    private Set<String> categories;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -41,7 +40,7 @@ public class Worker {
     public Worker() {
     }
 
-    public Worker(String name, String email, Set<ServiceCategory> categories,
+    public Worker(String name, String email, Set<String> categories,
                   Set<DayOfWeek> workDays, LocalTime workStart, LocalTime workEnd) {
         this.name = name;
         this.email = email;
@@ -56,8 +55,8 @@ public class Worker {
     public void setName(String name) { this.name = name; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public Set<ServiceCategory> getCategories() { return categories; }
-    public void setCategories(Set<ServiceCategory> categories) { this.categories = categories; }
+    public Set<String> getCategories() { return categories; }
+    public void setCategories(Set<String> categories) { this.categories = categories; }
     public Set<DayOfWeek> getWorkDays() { return workDays; }
     public void setWorkDays(Set<DayOfWeek> workDays) { this.workDays = workDays; }
     public LocalTime getWorkStart() { return workStart; }
