@@ -5,6 +5,7 @@ import ee.talson.ilubron.model.Booking;
 import ee.talson.ilubron.model.SalonService;
 import ee.talson.ilubron.model.Worker;
 import ee.talson.ilubron.repository.BookingRepository;
+import ee.talson.ilubron.repository.DayOffRepository;
 import ee.talson.ilubron.repository.SalonServiceRepository;
 import ee.talson.ilubron.repository.WorkerRepository;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,20 @@ public class AvailabilityService {
     private final WorkerRepository workerRepository;
     private final SalonServiceRepository serviceRepository;
     private final BookingRepository bookingRepository;
+    private final DayOffRepository dayOffRepository;
 
     public AvailabilityService(WorkerRepository workerRepository,
                                SalonServiceRepository serviceRepository,
-                               BookingRepository bookingRepository) {
+                               BookingRepository bookingRepository,
+                               DayOffRepository dayOffRepository) {
         this.workerRepository = workerRepository;
         this.serviceRepository = serviceRepository;
         this.bookingRepository = bookingRepository;
+        this.dayOffRepository = dayOffRepository;
+    }
+
+    public boolean isDayOff(Long workerId, LocalDate date) {
+        return dayOffRepository.existsByWorkerIdAndDate(workerId, date);
     }
 
     /**
@@ -66,7 +74,8 @@ public class AvailabilityService {
         List<LocalTime> result = new ArrayList<>();
         if (!worker.isActive()
                 || !worker.getCategories().contains(service.getCategory())
-                || !worker.getWorkDays().contains(date.getDayOfWeek())) {
+                || !worker.getWorkDays().contains(date.getDayOfWeek())
+                || isDayOff(worker.getId(), date)) {
             return result;
         }
 

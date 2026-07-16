@@ -35,6 +35,9 @@ public class Worker {
 
     private boolean active = true;
 
+    /** Personal code for the staff self-service page (day off management). */
+    private String pin;
+
     public Worker() {
     }
 
@@ -63,4 +66,6 @@ public class Worker {
     public void setWorkEnd(LocalTime workEnd) { this.workEnd = workEnd; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public String getPin() { return pin; }
+    public void setPin(String pin) { this.pin = pin; }
 }

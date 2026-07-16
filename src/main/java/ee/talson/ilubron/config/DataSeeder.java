@@ -31,7 +31,7 @@ public class DataSeeder {
                 return;
             }
 
-            workers.saveAll(List.of(
+            List<Worker> staff = List.of(
                     new Worker("Doris", "doristukk@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
                     new Worker("Ene", "eneorumaa2@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
                     new Worker("Terje", "terts75@gmail.com", Set.of(JUUKSUR), MON_FRI, OPEN, CLOSE),
@@ -39,7 +39,12 @@ public class DataSeeder {
                     // SmartBron: Anette teeb ripsmeid K ja R; pediküür samadel päevadel kuni täpsustub
                     new Worker("Anette", "anettekontson@gmail.com", Set.of(RIPSMED, PEDIKYYR),
                             Set.of(WEDNESDAY, FRIDAY), OPEN, CLOSE)
-            ));
+            );
+            // Arenduse PIN-id; toodangus määra päris PIN-id admin-otspunktiga PATCH /api/admin/workers/{id}/pin
+            for (Worker w : staff) {
+                w.setPin("0000");
+            }
+            workers.saveAll(staff);
 
             services.saveAll(List.of(
                     // Juuksur – SmartBroni kestused ja hinnad

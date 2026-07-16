@@ -43,6 +43,12 @@ public class BookingService {
                     || end.isAfter(worker.getWorkEnd())) {
                 continue;
             }
+            if (availabilityService.isDayOff(worker.getId(), request.date())) {
+                if (request.workerId() != null) {
+                    throw new ConflictException("Teenindaja ei võta sel päeval broneeringuid.");
+                }
+                continue;
+            }
             // Locked read: concurrent requests for the same worker+date serialize here,
             // so two overlapping bookings cannot both pass the isFree check.
             List<Booking> existing = bookingRepository
