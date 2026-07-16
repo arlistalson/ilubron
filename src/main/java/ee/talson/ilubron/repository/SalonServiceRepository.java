@@ -1,0 +1,11 @@
+package ee.talson.ilubron.repository;
+
+import ee.talson.ilubron.model.SalonService;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface SalonServiceRepository extends JpaRepository<SalonService, Long> {
+
+    List<SalonService> findByActiveTrueOrderByCategoryAscIdAsc();
+}
